@@ -1,20 +1,39 @@
-import React from 'react';
+import { RunsListPage } from './pages/RunsListPage';
+import { RunDetailsPage } from './pages/RunDetailsPage';
+import { savedRuns } from './data/mock';
+import './styles.css';
 
 export function App() {
   return (
-    <div style={{ fontFamily: 'Inter, sans-serif', padding: 24, background: '#f5f7fb', minHeight: '100vh' }}>
-      <h1>Lifecycle dashboard</h1>
-      <p>AI-assisted endpoint orchestration and deterministic OpenAPI contract validation.</p>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(180px,1fr))', gap: 12 }}>
-        <Card title="Manual spec trust" value="74/100" />
-        <Card title="OpenAPI 3 compatibility" value="81/100" />
-        <Card title="Live verified coverage" value="52/100" />
-        <Card title="Generation readiness" value="READY_WITH_FIXES" />
-      </div>
-    </div>
+    <main className="app-shell">
+      <header className="top-header">
+        <div>
+          <p className="muted">OpenAPI Contract Certification Platform</p>
+          <h1>Lifecycle dashboard</h1>
+          <p className="muted">Live view of spec fetch, AI scenario planning, workflow orchestration, queue execution, schema validation, scoring, and final generation readiness.</p>
+        </div>
+        <div className="actions">
+          <button className="primary">New run</button>
+          <button>Refresh</button>
+          <button>Export CSV</button>
+        </div>
+      </header>
+
+      <section className="metric-grid">
+        <Metric title="Manual spec trust" value="74/100" subtitle="Schema quality and contract coherence" />
+        <Metric title="OpenAPI 3 compatibility" value="81/100" subtitle="How contract-friendly production behavior is" />
+        <Metric title="Live verified coverage" value="52/100" subtitle="Portion actually validated with real execution" />
+        <Metric title="Generation readiness" value="READY_WITH_FIXES" subtitle="SDK, MCP, and agent generation decision" />
+      </section>
+
+      <section className="dashboard-grid">
+        <RunsListPage runs={savedRuns} />
+        <RunDetailsPage />
+      </section>
+    </main>
   );
 }
 
-function Card({ title, value }: { title: string; value: string }) {
-  return <div style={{ background: 'white', borderRadius: 12, padding: 14, border: '1px solid #dce3f0' }}><div>{title}</div><strong>{value}</strong></div>;
+function Metric({ title, value, subtitle }: { title: string; value: string; subtitle: string }) {
+  return <article className="metric panel"><h4>{title}</h4><strong>{value}</strong><p className="muted tiny">{subtitle}</p></article>;
 }
