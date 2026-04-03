@@ -1,0 +1,23 @@
+name = "openapi-spec-agent"
+main = "src/worker/index.ts"
+compatibility_date = "2026-04-03"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "openapi_spec_agent"
+database_id = "local-dev"
+
+[[r2_buckets]]
+binding = "ARTIFACTS"
+bucket_name = "openapi-spec-agent-artifacts"
+
+[[queues.producers]]
+queue = "execution-queue"
+binding = "EXECUTION_QUEUE"
+
+[[queues.consumers]]
+queue = "execution-queue"
+
+[assets]
+directory = "dist"
+binding = "ASSETS"
